@@ -66,18 +66,22 @@ namespace callforit.Controllers
         // POST: /Conference/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, Conference conference)
         {
-            try
+            var existingConference = Conferences.SingleOrDefault(x => x.Id.Equals(id));
+            if (existingConference == null)
             {
-                // TODO: Add update logic here
+                return HttpNotFound();
+            }
 
+            if (ModelState.IsValid)
+            {
+                Conferences.Remove(existingConference);
+                Conferences.Add(conference);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(conference);
         }
 
         //
