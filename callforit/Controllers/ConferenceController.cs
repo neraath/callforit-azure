@@ -22,7 +22,12 @@ namespace callforit.Controllers
 
         public ActionResult Details(int id)
         {
-            return View();
+            var conference = Conferences.SingleOrDefault(x => x.Id.Equals(id));
+            if (conference == null)
+            {
+                return HttpNotFound();
+            }
+            return View(conference);
         }
 
         //
