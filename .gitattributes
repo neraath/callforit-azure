@@ -1,2 +1,5 @@
 # Set default behaviour to automatically normalize line endings.
 * text=auto
+
+[core]
+        autocrlf = true
