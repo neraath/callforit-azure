@@ -7,8 +7,6 @@ namespace callforit.Controllers
 {
     public class ConferenceController : Controller
     {
-        public static IList<Conference> Conferences = new List<Conference>();
-
         //
         // GET: /Conference/
 
@@ -22,12 +20,9 @@ namespace callforit.Controllers
 
         public ActionResult Details(int id)
         {
-            var conference = Conferences.SingleOrDefault(x => x.Id.Equals(id));
-            if (conference == null)
-            {
-                return HttpNotFound();
-            }
-            return View(conference);
+            var existingConference = FindById(id);
+            if (existingConference == null) return HttpNotFound();
+            return View(existingConference);
         }
 
         //
@@ -46,8 +41,7 @@ namespace callforit.Controllers
         {
             if (ModelState.IsValid)
             {
-                conference.Id = Conferences.Count + 1;
-                Conferences.Add(conference);
+                AddOrReplaceConference(conference);
                 return RedirectToAction("Index");
             }
 
@@ -59,12 +53,9 @@ namespace callforit.Controllers
 
         public ActionResult Edit(int id)
         {
-            var conference = Conferences.SingleOrDefault(x => x.Id.Equals(id));
-            if (conference == null)
-            {
-                return HttpNotFound();
-            }
-            return View(conference);
+            var existingConference = FindById(id);
+            if (existingConference == null) return HttpNotFound();
+            return View(existingConference);
         }
 
         //
@@ -73,16 +64,12 @@ namespace callforit.Controllers
         [HttpPost]
         public ActionResult Edit(int id, Conference conference)
         {
-            var existingConference = Conferences.SingleOrDefault(x => x.Id.Equals(id));
-            if (existingConference == null)
-            {
-                return HttpNotFound();
-            }
+            var existingConference = FindById(id);
+            if (existingConference == null) return HttpNotFound();
 
             if (ModelState.IsValid)
             {
-                Conferences.Remove(existingConference);
-                Conferences.Add(conference);
+                AddOrReplaceConference(conference);
                 return RedirectToAction("Index");
             }
 
@@ -94,12 +81,8 @@ namespace callforit.Controllers
 
         public ActionResult Delete(int id)
         {
-            var existingConference = Conferences.SingleOrDefault(x => x.Id.Equals(id));
-            if (existingConference == null)
-            {
-                return HttpNotFound();
-            }
-
+            var existingConference = FindById(id);
+            if (existingConference == null) return HttpNotFound();
             return View(existingConference);
         }
 
@@ -109,14 +92,35 @@ namespace callforit.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            var existingConference = Conferences.SingleOrDefault(x => x.Id.Equals(id));
-            if (existingConference == null)
-            {
-                return HttpNotFound();
-            }
+            var existingConference = FindById(id);
+            if (existingConference == null) return HttpNotFound();
 
             Conferences.Remove(existingConference);
             return RedirectToAction("Index");
         }
+
+        #region Private Data Access
+
+        private static IList<Conference> Conferences = new List<Conference>();
+
+        private Conference FindById(int id)
+        {
+            return Conferences.SingleOrDefault(x => x.Id.Equals(id));
+        }
+
+        private void AddOrReplaceConference(Conference conference)
+        {
+            if (conference.Id == default(int))
+            {
+                conference.Id = Conferences.Count + 1;
+            }
+
+            var existingConference = FindById(conference.Id);
+            if (existingConference != default(Conference)) Conferences.Remove(existingConference);
+
+            Conferences.Add(conference);
+        }
+
+        #endregion
     }
 }
