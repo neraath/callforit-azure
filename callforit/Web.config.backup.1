@@ -7,8 +7,6 @@
   <configSections>
     <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
     <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
-    <section name="system.identityModel" type="System.IdentityModel.Configuration.SystemIdentityModelSection, System.IdentityModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
-    <section name="system.identityModel.services" type="System.IdentityModel.Services.Configuration.SystemIdentityModelServicesSection, System.IdentityModel.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
   </configSections>
   <appSettings>
     <!-- Service Bus specific app setings for messaging connections -->
@@ -18,26 +16,13 @@
     <add key="ClientValidationEnabled" value="true" />
     <add key="UnobtrusiveJavaScriptEnabled" value="true" />
     <add key="CallForItServiceBus" value="Endpoint=sb://callforitbus.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=RMrsStfa8xCtT7fKkhm3rbfcUF6jGWS1/O3TJWv5/J4=" />
-    <add key="ida:FederationMetadataLocation" value="https://login.windows.net/07d3c543-2ddb-4cd3-aeaa-474c819ab993/FederationMetadata/2007-06/FederationMetadata.xml" />
-    <add key="ida:Issuer" value="https://login.windows.net/07d3c543-2ddb-4cd3-aeaa-474c819ab993/wsfed" />
-    <add key="ida:ProviderSelection" value="productionSTS" />
   </appSettings>
   <connectionStrings>
     <add name="improvingwa-test_db" providerName="System.Data.SqlClient" connectionString="server=localhost;database=gwabdemo;integrated security=true" />
   </connectionStrings>
-  <location path="FederationMetadata">
-    <system.web>
-      <authorization>
-        <allow users="*" />
-      </authorization>
-    </system.web>
-  </location>
   <system.web>
-    <authorization>
-      <deny users="?" />
-    </authorization>
     <compilation debug="true" targetFramework="4.5" />
-    <httpRuntime targetFramework="4.5" requestValidationMode="4.5" />
+    <httpRuntime targetFramework="4.5" />
     <authentication mode="None" />
     <pages>
       <namespaces>
@@ -50,7 +35,6 @@
         <add namespace="System.Web.WebPages" />
       </namespaces>
     </pages>
-    <machineKey decryptionKey="A49C24FFC285F19ED3C37002073D8A1BA510EBD0676D3577" validationKey="B7C3D964EE68DD2CE971C6549C4F897063DF81838EF98070CE8AA8E0141FFA14EE9682D9F3C9B6A622090C0654DFEE1F915DBD5E34D3FB6E2D74DFB2952A3FA9" />
   </system.web>
   <system.webServer>
     <validation validateIntegratedModeConfiguration="false" />
@@ -62,11 +46,6 @@
       <add name="ExtensionlessUrlHandler-ISAPI-4.0_64bit" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" modules="IsapiModule" scriptProcessor="%windir%\Microsoft.NET\Framework64\v4.0.30319\aspnet_isapi.dll" preCondition="classicMode,runtimeVersionv4.0,bitness64" responseBufferLimit="0" />
       <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE,PATCH,OPTIONS" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode,runtimeVersionv4.0" />
     </handlers>
-    <modules>
-      <remove name="FormsAuthentication" />
-      <add name="WSFederationAuthenticationModule" type="System.IdentityModel.Services.WSFederationAuthenticationModule, System.IdentityModel.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" preCondition="managedHandler" />
-      <add name="SessionAuthenticationModule" type="System.IdentityModel.Services.SessionAuthenticationModule, System.IdentityModel.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" preCondition="managedHandler" />
-    </modules>
   </system.webServer>
   <runtime>
     <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
@@ -121,33 +100,4 @@
       </bindingExtensions>
     </extensions>
   </system.serviceModel>
-  <system.identityModel>
-    <identityConfiguration>
-      <audienceUris>
-        <add value="https://improving-gwab.azurewebsites.net/" />
-      </audienceUris>
-      <issuerNameRegistry type="System.IdentityModel.Tokens.ValidatingIssuerNameRegistry, System.IdentityModel.Tokens.ValidatingIssuerNameRegistry">
-        <authority name="https://sts.windows.net/07d3c543-2ddb-4cd3-aeaa-474c819ab993/">
-          <keys>
-            <add thumbprint="3464C5BDD2BE7F2B6112E2F08E9C0024E33D9FE0" />
-          </keys>
-          <validIssuers>
-            <add name="https://sts.windows.net/07d3c543-2ddb-4cd3-aeaa-474c819ab993/" />
-          </validIssuers>
-        </authority>
-      </issuerNameRegistry>
-      <!--certificationValidationMode set to "None" by the the Identity and Access Tool for Visual Studio. For development purposes.-->
-      <certificateValidation certificateValidationMode="None" />
-      <securityTokenHandlers>
-        <add type="System.IdentityModel.Services.Tokens.MachineKeySessionSecurityTokenHandler, System.IdentityModel.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-        <remove type="System.IdentityModel.Tokens.SessionSecurityTokenHandler, System.IdentityModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-      </securityTokenHandlers>
-    </identityConfiguration>
-  </system.identityModel>
-  <system.identityModel.services>
-    <federationConfiguration>
-      <cookieHandler requireSsl="false" />
-      <wsFederation passiveRedirectEnabled="true" issuer="https://login.windows.net/07d3c543-2ddb-4cd3-aeaa-474c819ab993/wsfed" realm="https://improving-gwab.azurewebsites.net/" requireHttps="false" />
-    </federationConfiguration>
-  </system.identityModel.services>
 </configuration>
