@@ -94,12 +94,8 @@ namespace callforit.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            return null;
-            //var existingConference = FindById(id);
-            //if (existingConference == null) return HttpNotFound();
-
-            //Conferences.Remove(existingConference);
-            //return RedirectToAction("Index");
+            DeleteConference(id);
+            return RedirectToAction("Index");
         }
 
         #region Private Data Access
@@ -125,7 +121,9 @@ namespace callforit.Controllers
                 else
                 {
                     // Update Scenario
-                    throw new Exception("Tim you haven't made that work yet");
+                    conference = context.Conferences.Attach(conference);
+                    context.Entry(conference).State = System.Data.EntityState.Modified;
+                    context.SaveChanges();
                 }
             }
         }
@@ -135,6 +133,15 @@ namespace callforit.Controllers
             using (var context = new EFContext())
             {
                 return context.Conferences.ToList();
+            }
+        }
+        private void DeleteConference(int id)
+        {
+            using (var context = new EFContext())
+            {
+                var conf = context.Conferences.SingleOrDefault(e => e.Id == id);
+                context.Conferences.Remove(conf);
+                context.SaveChanges();
             }
         }
         #endregion
