@@ -37,18 +37,16 @@ namespace callforit.Controllers
         // POST: /Conference/Create
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Conference conference)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                conference.Id = Conferences.Count + 1;
+                Conferences.Add(conference);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(conference);
         }
 
         //

@@ -256,6 +256,7 @@
     <Content Include="packages.config" />
     <None Include="readme.txt" />
     <Content Include="Views\Conference\Index.cshtml" />
+    <Content Include="Views\Conference\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
