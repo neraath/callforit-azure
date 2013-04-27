@@ -16,7 +16,14 @@
                 </div>
                 <div class="float-right">
                     <section id="login">
-                       Hello, <span class="username">@User.Identity.Name</span>!
+                        @if (!string.IsNullOrEmpty(User.Identity.Name))
+                        {
+                            <span>Hello, <span class="username">@User.Identity.Name</span>!</span>
+                        }
+                        else
+                        {
+                            <span>&nbsp;</span>
+                        }
                     </section>
                     <nav>
                         <ul id="menu">
