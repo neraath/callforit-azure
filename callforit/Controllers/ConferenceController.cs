@@ -12,6 +12,7 @@ namespace callforit.Controllers
 
         public ActionResult Index()
         {
+            System.Diagnostics.Trace.TraceError("ZOMG this is bad!");
             return View(Conferences.ToList());
         }
 
