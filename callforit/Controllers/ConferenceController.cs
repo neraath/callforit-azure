@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Microsoft.ServiceBus;
+using Microsoft.ServiceBus.Messaging;
+using Microsoft.WindowsAzure;
 using callforit.Models;
 using System;
 
@@ -108,6 +111,29 @@ namespace callforit.Controllers
             }
         }
 
+        private void SendEmailNotificationAboutNewConference(Conference conference)
+        {
+            var namespaceManager =
+                NamespaceManager.CreateFromConnectionString(CloudConfigurationManager.GetSetting("CallForItServiceBus"));
+
+            if (namespaceManager.QueueExists("NewConferenceQueue") == false)
+                namespaceManager.CreateQueue("NewConferenceQueue");
+
+            var queueClient =
+                QueueClient.CreateFromConnectionString(CloudConfigurationManager.GetSetting("CallForItServiceBus"),
+                                                       "NewConferenceQueue");
+
+            var notification = new EmailNotification();
+
+            notification.ToEmailAddress = "improvingwa@gmail.com";
+            notification.FromEmailAddress = "conferences@callforit.com";
+            notification.Subject = "New Conference!";
+            notification.Body = String.Format("Great news! {0} has been scheduled for {1}.", conference.Name,
+                                              conference.StartDate);
+
+            queueClient.Send(new BrokeredMessage(notification));
+        }
+
         private void AddOrReplaceConference(Conference conference)
         {
             using (var context = new EFContext())
@@ -117,6 +143,8 @@ namespace callforit.Controllers
                     // Add Scenario
                     context.Conferences.Add(conference);
                     context.SaveChanges();
+
+                    SendEmailNotificationAboutNewConference(conference);
                 }
                 else
                 {

@@ -10,6 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9ABBE4
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "CallForItServices", "CallForItServices\CallForItServices.ccproj", "{A0DB7AEB-4A48-4388-9FF9-56E85AA70542}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailDispatcherWorkerRole", "EmailDispatcherWorkerRole\EmailDispatcherWorkerRole.csproj", "{7078D514-C702-4B0D-976C-29441742A8AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,14 @@ Global
 		{B1AB1D66-083E-49B3-A8AC-B91756239F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1AB1D66-083E-49B3-A8AC-B91756239F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1AB1D66-083E-49B3-A8AC-B91756239F68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0DB7AEB-4A48-4388-9FF9-56E85AA70542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0DB7AEB-4A48-4388-9FF9-56E85AA70542}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0DB7AEB-4A48-4388-9FF9-56E85AA70542}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0DB7AEB-4A48-4388-9FF9-56E85AA70542}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7078D514-C702-4B0D-976C-29441742A8AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7078D514-C702-4B0D-976C-29441742A8AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7078D514-C702-4B0D-976C-29441742A8AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7078D514-C702-4B0D-976C-29441742A8AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
