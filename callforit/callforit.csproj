@@ -170,6 +170,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201304272134477_Initial.cs" />
+    <Compile Include="Migrations\201304272134477_Initial.Designer.cs">
+      <DependentUpon>201304272134477_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Conference.cs" />
     <Compile Include="Models\EFContext.cs" />
     <Compile Include="Models\EmailNotification.cs" />
@@ -286,6 +291,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201304272134477_Initial.resx">
+      <DependentUpon>201304272134477_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
