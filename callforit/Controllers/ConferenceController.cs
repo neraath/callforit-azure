@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using callforit.Models;
+using System;
 
 namespace callforit.Controllers
 {
@@ -13,7 +14,7 @@ namespace callforit.Controllers
         public ActionResult Index()
         {
             System.Diagnostics.Trace.TraceError("ZOMG this is bad!");
-            return View(Conferences.ToList());
+            return View(GetAll());
         }
 
         //
@@ -93,35 +94,49 @@ namespace callforit.Controllers
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            var existingConference = FindById(id);
-            if (existingConference == null) return HttpNotFound();
+            return null;
+            //var existingConference = FindById(id);
+            //if (existingConference == null) return HttpNotFound();
 
-            Conferences.Remove(existingConference);
-            return RedirectToAction("Index");
+            //Conferences.Remove(existingConference);
+            //return RedirectToAction("Index");
         }
 
         #region Private Data Access
 
-        private static IList<Conference> Conferences = new List<Conference>();
-
         private Conference FindById(int id)
         {
-            return Conferences.SingleOrDefault(x => x.Id.Equals(id));
+            using (var context = new EFContext())
+            {
+                return context.Conferences.SingleOrDefault(x => x.Id.Equals(id));
+            }
         }
 
         private void AddOrReplaceConference(Conference conference)
         {
-            if (conference.Id == default(int))
+            using (var context = new EFContext())
             {
-                conference.Id = Conferences.Count + 1;
+                if (conference.Id == default(int))
+                {
+                    // Add Scenario
+                    context.Conferences.Add(conference);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    // Update Scenario
+                    throw new Exception("Tim you haven't made that work yet");
+                }
             }
-
-            var existingConference = FindById(conference.Id);
-            if (existingConference != default(Conference)) Conferences.Remove(existingConference);
-
-            Conferences.Add(conference);
         }
 
+        private IEnumerable<Conference> GetAll()
+        {
+            using (var context = new EFContext())
+            {
+                return context.Conferences.ToList();
+            }
+        }
         #endregion
     }
 }
