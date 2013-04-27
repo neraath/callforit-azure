@@ -2,4 +2,4 @@
 * text=auto
 
 [core]
-        autocrlf = true
+#        autocrlf = true
