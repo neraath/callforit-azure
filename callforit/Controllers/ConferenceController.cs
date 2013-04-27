@@ -89,25 +89,29 @@ namespace callforit.Controllers
 
         public ActionResult Delete(int id)
         {
-            return View();
+            var existingConference = Conferences.SingleOrDefault(x => x.Id.Equals(id));
+            if (existingConference == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(existingConference);
         }
 
         //
         // POST: /Conference/Delete/5
 
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
         {
-            try
+            var existingConference = Conferences.SingleOrDefault(x => x.Id.Equals(id));
+            if (existingConference == null)
             {
-                // TODO: Add delete logic here
+                return HttpNotFound();
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            Conferences.Remove(existingConference);
+            return RedirectToAction("Index");
         }
     }
 }

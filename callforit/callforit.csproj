@@ -258,6 +258,7 @@
     <Content Include="Views\Conference\Index.cshtml" />
     <Content Include="Views\Conference\Create.cshtml" />
     <Content Include="Views\Conference\Edit.cshtml" />
+    <Content Include="Views\Conference\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
