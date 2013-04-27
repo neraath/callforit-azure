@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web.Mvc;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
@@ -46,6 +47,10 @@ namespace callforit.Controllers
         {
             if (ModelState.IsValid)
             {
+                ClaimsPrincipal principal = ClaimsPrincipal.Current;
+                var fullname = string.Format("{0} {1}", principal.FindFirst(ClaimTypes.GivenName).Value,
+                                             principal.FindFirst(ClaimTypes.Surname).Value);
+                conference.CreatorName = fullname;
                 AddOrReplaceConference(conference);
                 return RedirectToAction("Index");
             }

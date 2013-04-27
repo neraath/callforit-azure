@@ -21,6 +21,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.StartDate)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatorName)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -36,6 +39,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => conference.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => conference.CreatorName)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = conference.Id })
