@@ -1,0 +1,42 @@
+﻿@model IEnumerable<callforit.Models.Conference>
+
+@{
+    ViewBag.Title = "Conferences";
+}
+
+<h2>Conferences</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Url)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var conference in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => conference.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => conference.Url)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = conference.Id })
+                    @Html.ActionLink("Details", "Details", new { id = conference.Id })
+                    @Html.ActionLink("Delete", "Delete", new { id = conference.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
